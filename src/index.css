@@ -1,11 +1,14 @@
-html, body {
+ body {
   padding:0;
   margin: 0;
-  height: 100%;
+  /* height: 100%; */
 
   font-family: "Courier New", Courier, monospace;
+}
 
+html{
   background: linear-gradient(45deg, rgb(135, 65, 65), rgb(49, 49, 149));
+  height: 100%;
 }
 
 code {
