@@ -2,6 +2,10 @@
   text-align: center;
 }
 
+/* p, label, legend {
+  color: aliceblue;
+} */
+
 .tsparticles {
   position:fixed;
   top:0;

@@ -9,6 +9,8 @@
 html{
   background: linear-gradient(45deg, rgb(135, 65, 65), rgb(49, 49, 149));
   height: 100%;
+
+  /* color:paleturquoise; */
 }
 
 code {
