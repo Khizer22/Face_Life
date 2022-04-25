@@ -219,12 +219,8 @@ const particleOptions2 = {
       value: { min: 1, max: 5 },
     },
   },
-  detectRetina: true
+  detectRetina: false
 
-}
-
-const homeScreen = {
-  
 }
 
 const initialState = {
@@ -325,26 +321,26 @@ class App extends Component {
     this.setState({route: route});
   }
 
+  async particlesInit (main) {
+    console.log(main);
+    // let tsParticles = main;
+    // you can initialize the tsParticles instance (main) here, adding custom shapes or presets
+    // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
+    // starting from v2 you can add only the features you need reducing the bundle size
+    await loadFull(main);
+  }
+
+  particlesLoaded (container){
+    // console.log(container);
+  };
+
   render(){
 
-    async function particlesInit  (main) {
-      console.log(main);
-      // let tsParticles = main;
-      // you can initialize the tsParticles instance (main) here, adding custom shapes or presets
-      // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
-      // starting from v2 you can add only the features you need reducing the bundle size
-      await loadFull(main);
-    }
-
-    function particlesLoaded (container){
-      console.log(container);
-    };
-  
     const {isSignedIn, box, imageURL, route, user} = this.state;
 
     return (
       <div className="App">
-        {/* <Particles className="tsparticles" params={particleOptions2} init={particlesInit} loaded={particlesLoaded} /> */}
+        <Particles className="tsparticles" params={particleOptions2} init={this.particlesInit} loaded={this.particlesLoaded} />
 
         <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
         <Logo />
