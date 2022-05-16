@@ -20,3 +20,30 @@
   justify-content: center;
 }
 
+.signin-box{
+  background-color: rgba(20, 33, 47,0.5);
+  /* opacity: 0.5; */
+}
+
+.feedback-message {
+  color: red;
+  font-weight: bold;
+  font-size: large;
+}
+
+.logging-in-message {
+  color: green;
+  font-weight: bold;
+  font-size: large;
+}
+
+.flash {
+  animation: blinker 1s linear;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0.5;
+    color:aliceblue;
+  }
+}
