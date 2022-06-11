@@ -98,7 +98,8 @@ const initialState = {
     email: '',
     entries: 0,
     joined: ''
-  }
+  },
+  updateGeneralInfoText: []
 }
 
 class App extends Component {
@@ -130,6 +131,12 @@ class App extends Component {
         rightCol: width - (clarifaiFace.right_col * width),
         bottomRow: height - (clarifaiFace.bottom_row * height)
     }
+  }
+
+  getGeneralImageInfo = (data) => {
+    data.outputs[0].data.concepts.forEach(element => {
+      console.log(`TYPE: ${element.name} PERCENT${element.value}`);
+    });
   }
 
   displayFaceBox = (box) =>{
@@ -172,6 +179,26 @@ class App extends Component {
       this.displayFaceBox(this.calculateFaceLocation(response))
     })
     .catch(err => console.log(err));
+
+    //API to get general information
+    fetch(`https://pure-ravine-89852.herokuapp.com/generalimageurl`, {
+      method: 'post',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+          input: this.state.input
+      })
+    })
+    .then(response => response.json())
+    .then(response => {
+      if (response){
+        //testing
+        this.getGeneralImageInfo(response);
+        this.setState({updateGeneralInfoText: response.outputs[0].data.concepts}); //hide add image url text 
+      }
+      
+    })
+    .catch(err => console.log(err));
+
   }
 
   onRouteChange = (route) => {
@@ -199,7 +226,7 @@ class App extends Component {
 
   render(){
 
-    const {isSignedIn, box, imageURL, route, user} = this.state;
+    const {isSignedIn, box, imageURL, route, user, updateGeneralInfoText} = this.state;
 
     return (
       <div className="App">
@@ -211,11 +238,12 @@ class App extends Component {
         {route ==='home' 
           ? <div>  
               <Rank userName={user.name} userEntries={user.entries}/>
+              <FaceRecognition box={box} imageURL={imageURL}/>
               <ImageLinkForm 
                 onInputChange={this.onInputChange}
                 onPictureSubmit={this.onPictureSubmit}
+                generalInfoText={updateGeneralInfoText}
               />
-              <FaceRecognition box={box} imageURL={imageURL}/>
           </div>
           : route ==='signin' ? <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} /> : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
         }
