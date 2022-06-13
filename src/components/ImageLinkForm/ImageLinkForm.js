@@ -6,14 +6,21 @@ const ImageLinkForm = ({onInputChange , onPictureSubmit, generalInfoText}) =>{
     let infoText = ``;
     if (generalInfoText.length > 0 ){
         infoText = 'ATTRIBUTES: \n'
-        generalInfoText.forEach(element => {
-            infoText += ` ${element.name},`;
+        generalInfoText.forEach((element,index) => {
+
+            let ending = ',';
+
+            if (index === generalInfoText.length - 1){
+                ending = '.'
+            }
+
+            infoText += ` ${element.name}${ending}`;
         });
     }
 
     return (
         <div>
-            <p className='f3'>{infoText.length > 0 ? infoText : `Copy and paste an image url below!`}</p>            
+            <p className='center-text f3'>{infoText.length > 0 ? infoText : `Copy and paste an image url below!`}</p>            
         
         <div className='center'>
             <div className='center form pa4 br3 shadow-5'>

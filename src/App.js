@@ -89,7 +89,7 @@ const particleOptions2 = {
 const initialState = {
   input : '',
   imageURL: '',
-  box: {},
+  boxes: [],
   route: 'signin',
   isSignedIn: false,
   user:{
@@ -120,28 +120,31 @@ class App extends Component {
   }
 
   calculateFaceLocation = (data) =>{
-    const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
-    const image = document.getElementById('inputImage');
-    const width = Number(image.width);
-    const height = Number(image.height);
-    
-    return {
+
+    let faceInfo = [];
+    //For each region, do the rest
+    for (let i=0; i< data.outputs[0].data.regions.length; i++){
+      const clarifaiFace = data.outputs[0].data.regions[i].region_info.bounding_box;
+      const image = document.getElementById('inputImage');
+      const width = Number(image.width);
+      const height = Number(image.height);
+
+      const faceBox = {  
         leftCol: clarifaiFace.left_col * width,
         topRow: clarifaiFace.top_row * height,
         rightCol: width - (clarifaiFace.right_col * width),
         bottomRow: height - (clarifaiFace.bottom_row * height)
+      }
+
+      faceInfo.push(faceBox);
     }
-  }
 
-  getGeneralImageInfo = (data) => {
-    data.outputs[0].data.concepts.forEach(element => {
-      console.log(`TYPE: ${element.name} PERCENT${element.value}`);
-    });
-  }
+    return faceInfo;
+}
 
-  displayFaceBox = (box) =>{
-    console.log(box);
-    this.setState({box: box});
+  displayFaceBox = (boxes) =>{
+    // console.log(boxes);
+    this.setState({boxes: boxes});
   }
 
   onInputChange = (event) => {
@@ -151,7 +154,8 @@ class App extends Component {
   onPictureSubmit = () => {
     // console.log(Clarifai);
     this.setState({imageURL: this.state.input});
-
+    
+    //API to get face location
     fetch(`https://pure-ravine-89852.herokuapp.com/imageurl`, {
       method: 'post',
       headers: {'Content-Type':'application/json'},
@@ -162,6 +166,7 @@ class App extends Component {
     .then(response => response.json())
     .then(response => {
       if (response){
+        //API to get tool use count
         fetch(`https://pure-ravine-89852.herokuapp.com/image`, {
             method: 'put',
             headers: {'Content-Type':'application/json'},
@@ -191,9 +196,7 @@ class App extends Component {
     .then(response => response.json())
     .then(response => {
       if (response){
-        //testing
-        this.getGeneralImageInfo(response);
-        this.setState({updateGeneralInfoText: response.outputs[0].data.concepts}); //hide add image url text 
+        this.setState({updateGeneralInfoText: response.outputs[0].data.concepts}); //general image info 
       }
       
     })
@@ -226,7 +229,7 @@ class App extends Component {
 
   render(){
 
-    const {isSignedIn, box, imageURL, route, user, updateGeneralInfoText} = this.state;
+    const {isSignedIn, boxes, imageURL, route, user, updateGeneralInfoText} = this.state;
 
     return (
       <div className="App">
@@ -238,7 +241,7 @@ class App extends Component {
         {route ==='home' 
           ? <div>  
               <Rank userName={user.name} userEntries={user.entries}/>
-              <FaceRecognition box={box} imageURL={imageURL}/>
+              <FaceRecognition boxes={boxes} imageURL={imageURL}/>
               <ImageLinkForm 
                 onInputChange={this.onInputChange}
                 onPictureSubmit={this.onPictureSubmit}
