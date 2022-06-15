@@ -89,6 +89,7 @@ const particleOptions2 = {
 const initialState = {
   input : '',
   imageURL: '',
+  // localImage: null,
   boxes: [],
   route: 'signin',
   isSignedIn: false,
@@ -151,20 +152,57 @@ class App extends Component {
     this.setState({input: event.target.value});
   }
 
-  onPictureSubmit = () => {
-    // console.log(Clarifai);
-    this.setState({imageURL: this.state.input});
+  onFileChange = (event) => {
+     // Update the state
+    //  this.setState({ localImage: event.target.files[0] });
+     this.setState({ imageURL: URL.createObjectURL(event.target.files[0]) });
+
+     const formData = new FormData();
+    // Update the formData object
+    formData.append('myimage', event.target.files[0]);
     
-    //API to get face location
-    fetch(`https://pure-ravine-89852.herokuapp.com/imageurl`, {
+    const myBody = {
       method: 'post',
+      body: formData
+    }
+
+    this.onPictureSubmit(myBody);
+  }
+
+  // onFileUpload = (event) => {
+  //   const formData = new FormData();
+    
+  //   // Update the formData object
+  //   formData.append('myimage', this.state.localImage);
+  //   console.log(this.state.localImage);
+    
+  //   const myBody = {
+  //     method: 'post',
+  //     body: formData
+  //   }
+
+  //   this.onPictureSubmit(myBody);
+  // }
+
+  onDetectURL = (event) => {
+    this.setState({imageURL: this.state.input});
+    const myBody = {
       headers: {'Content-Type':'application/json'},
+      method: 'post',
       body: JSON.stringify({
-          input: this.state.input
+        input: this.state.input
       })
-    })
+    }
+    
+    this.onPictureSubmit(myBody);
+  }
+
+  onPictureSubmit = (body) => {  
+    //API to get face location
+    fetch(`https://pure-ravine-89852.herokuapp.com/imageurl`, body)
     .then(response => response.json())
     .then(response => {
+      console.log(response);
       if (response){
         //API to get tool use count
         fetch(`https://pure-ravine-89852.herokuapp.com/image`, {
@@ -186,15 +224,10 @@ class App extends Component {
     .catch(err => console.log(err));
 
     //API to get general information
-    fetch(`https://pure-ravine-89852.herokuapp.com/generalimageurl`, {
-      method: 'post',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({
-          input: this.state.input
-      })
-    })
+    fetch(`https://pure-ravine-89852.herokuapp.com/generalimageurl`, body)
     .then(response => response.json())
     .then(response => {
+      console.log(response);
       if (response){
         this.setState({updateGeneralInfoText: response.outputs[0].data.concepts}); //general image info 
       }
@@ -244,7 +277,9 @@ class App extends Component {
               <FaceRecognition boxes={boxes} imageURL={imageURL}/>
               <ImageLinkForm 
                 onInputChange={this.onInputChange}
-                onPictureSubmit={this.onPictureSubmit}
+                onDetectURL={this.onDetectURL}
+                onFileUpload={this.onFileUpload}
+                onFileChange={this.onFileChange}
                 generalInfoText={updateGeneralInfoText}
               />
           </div>
