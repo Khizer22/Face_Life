@@ -26,7 +26,7 @@ const ImageLinkForm = ({onInputChange , onDetectURL,onFileUpload,onFileChange, g
             <div className='center form pa4 br3 shadow-5'>
                 <input className='f4 pa2 w-70 center' type='text' onChange={onInputChange}  />
                 <button onClick={onDetectURL} className='w-20 grow f5 link ph1 pv2 dib white bg-light-purple'>Detect URL</button>
-                <input type='file' className='w-20 grow f5 link ph1 pv2 dib white bg-light-purple'  onChange={onFileChange}/>
+                <input type='file' accept="image/png, image/gif, image/jpeg" className='w-20 grow f5 link ph1 pv2 dib white bg-light-purple'  onChange={onFileChange}/>
                 {/* <button onClick={onFileUpload} className='w-20 grow f5 link ph1 pv2 dib white bg-light-purple'>UPLOAD</button> */}
             </div>
         </div>
