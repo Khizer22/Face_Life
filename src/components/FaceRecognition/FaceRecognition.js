@@ -10,7 +10,7 @@ const FaceRecognition = ({imageURL,boxes}) =>{
     return (
         <div className='center ma'>
             <div className='relative mt2'>
-                <img id='inputImage' alt='image to scan' src={imageURL} width='500px' height='auto'/>
+                <img id='inputImage' alt='image to scan' src={imageURL}/>
                
                 {boxesArray}
                 
