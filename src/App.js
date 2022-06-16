@@ -7,6 +7,7 @@ import Rank from './components/Rank/Rank';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import Signin from './components/Signin/Signin';
 import Register from './components/Register/Register';
+import Header from './components/Header/header';
 import './App.css';
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
@@ -108,6 +109,8 @@ class App extends Component {
   constructor(){
     super();
     this.state= initialState;
+
+    document.title = `Face Life`;
   }
 
   loadUser = (data) => {
@@ -292,7 +295,7 @@ class App extends Component {
           : route ==='signin' ? <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} /> : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
         }
           
-        
+        <Header/>  
       </div>
     );
   }
