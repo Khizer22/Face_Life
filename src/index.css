@@ -21,6 +21,6 @@ code {
     monospace;
 }
 
-button{
+button, label{
   cursor: pointer;
 }

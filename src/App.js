@@ -198,8 +198,8 @@ class App extends Component {
   }
 
   onPictureSubmit = (body) => {  
-    this.setState({updateGeneralInfoText: 'LOADING...'});
     this.setState({boxes: []});
+    this.setState({updateGeneralInfoText: 'LOADING...'});
 
     //API to get face location
     fetch(`https://pure-ravine-89852.herokuapp.com/imageurl`, body)
@@ -224,7 +224,10 @@ class App extends Component {
       }
       this.displayFaceBox(this.calculateFaceLocation(response))
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      this.setState({updateGeneralInfoText: []});
+      console.log(err);
+    });
 
     //API to get general information
     fetch(`https://pure-ravine-89852.herokuapp.com/generalimageurl`, body)
