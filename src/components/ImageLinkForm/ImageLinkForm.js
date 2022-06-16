@@ -4,19 +4,22 @@ import './ImageLinkForm.css';
 const ImageLinkForm = ({onInputChange , onDetectURL,onFileUpload,onFileChange, generalInfoText}) =>{
 
     let infoText = ``;
-    if (generalInfoText.length > 0 ){
-        infoText = 'ATTRIBUTES: \n'
-        generalInfoText.forEach((element,index) => {
+    if (generalInfoText === 'LOADING...')
+        infoText = generalInfoText;
+    else
+        if (generalInfoText.length > 0 ){
+            infoText = 'ATTRIBUTES: \n'
+            generalInfoText.forEach((element,index) => {
 
-            let ending = ',';
+                let ending = ',';
 
-            if (index === generalInfoText.length - 1){
-                ending = '.'
-            }
+                if (index === generalInfoText.length - 1){
+                    ending = '.'
+                }
 
-            infoText += ` ${element.name}${ending}`;
-        });
-    }
+                infoText += ` ${element.name}${ending}`;
+            });
+        }
 
     return (
         <div>

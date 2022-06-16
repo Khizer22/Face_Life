@@ -198,6 +198,8 @@ class App extends Component {
   }
 
   onPictureSubmit = (body) => {  
+    this.setState({updateGeneralInfoText: 'LOADING...'});
+
     //API to get face location
     fetch(`https://pure-ravine-89852.herokuapp.com/imageurl`, body)
     .then(response => response.json())
