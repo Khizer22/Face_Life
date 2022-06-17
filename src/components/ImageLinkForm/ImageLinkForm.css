@@ -16,3 +16,9 @@ background-size:16px 16px;
     padding: 20px;
     color:black;
 }
+
+label{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
