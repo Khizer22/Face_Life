@@ -274,29 +274,32 @@ class App extends Component {
     const {isSignedIn, boxes, imageURL, route, user, updateGeneralInfoText} = this.state;
 
     return (
-      <div className="App">
-        <Particles className="tsparticles" params={particleOptions2} init={this.particlesInit} loaded={this.particlesLoaded} />
+      <>
+        <div className="App">
+          <Particles className="tsparticles" params={particleOptions2} init={this.particlesInit} loaded={this.particlesLoaded} />
 
-        <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
-        <Logo />
+          <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
+          <Logo />
 
-        {route ==='home' 
-          ? <div>  
-              <Rank userName={user.name} userEntries={user.entries}/>
-              <FaceRecognition boxes={boxes} imageURL={imageURL}/>
-              <ImageLinkForm 
-                onInputChange={this.onInputChange}
-                onDetectURL={this.onDetectURL}
-                onFileUpload={this.onFileUpload}
-                onFileChange={this.onFileChange}
-                generalInfoText={updateGeneralInfoText}
-              />
-          </div>
-          : route ==='signin' ? <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} /> : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
-        }
+          {route ==='home' 
+            ? <div>  
+                <Rank userName={user.name} userEntries={user.entries}/>
+                <FaceRecognition boxes={boxes} imageURL={imageURL}/>
+                <ImageLinkForm 
+                  onInputChange={this.onInputChange}
+                  onDetectURL={this.onDetectURL}
+                  onFileUpload={this.onFileUpload}
+                  onFileChange={this.onFileChange}
+                  generalInfoText={updateGeneralInfoText}
+                />
+            </div>
+            : route ==='signin' ? <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} /> : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
+          }
+            
           
-        <Header/>  
-      </div>
+        </div>
+        <Header/> 
+      </>
     );
   }
 }

@@ -1,11 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Indie+Flower'); 
 
 .header-css{
-    position:absolute;    
+    /* position:relative;     */
     bottom:0;
     color: rgb(6, 8, 10);
     padding: 0px;
-    padding-top: 9px;
     width: 100%;
     
     background-color: rgba(19, 42, 68,0.1);
