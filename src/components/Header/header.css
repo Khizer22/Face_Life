@@ -1,20 +1,20 @@
 @import url('https://fonts.googleapis.com/css?family=Indie+Flower'); 
 
 .header-css{
-    /* position:relative;     */
     bottom:0;
     color: rgb(6, 8, 10);
-    padding: 0px;
+    padding: 10px;
     width: 100%;
+    text-align: center;
     
     background-color: rgba(19, 42, 68,0.1);
 }
 
-@media only screen and (max-height: 700px) {
+/* @media only screen and (max-height: 700px) {
     .header-css{
         position:relative;
     }
-}
+} */
 
 a{
     /* color: rgb(178, 204, 224); */
