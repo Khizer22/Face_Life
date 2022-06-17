@@ -3,10 +3,14 @@
 .header-css{
     bottom:0;
     color: rgb(6, 8, 10);
-    padding: 10px;
+    padding: 5px;
     width: 100%;
+    height:65px;
     text-align: center;
-    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: row wrap;
     background-color: rgba(19, 42, 68,0.1);
 }
 
@@ -45,10 +49,14 @@ p{
     margin:0;
 }
 
+#created-by-text{
+    width: 100%;
+}
+
 .portfolio-text{
-    font-family: "Indie Flower",monospace;
+    /* font-family: "Indie Flower",monospace; */
     font-size:larger;
-   
+    font-weight: bolder;
 }
 
 #v-s-text{
